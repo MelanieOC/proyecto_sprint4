@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Lyft-App</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+</head>
+<body id="phone"> 
+	<header class="text-center">
+		<div class="regresar">
+			<a href="index.html"><i class="fa fa-angle-left fa-3x" aria-hidden="true"></i></a>
+		</div>
+		<h1>Sign up</h1>
+		<h4>Join now for free ride credit</h4>
+		<hr>
+	</header>
+	<section class="container">
+		<div class="input-close container">
+			<div class="row">
+				<div class="col-sm-3 col-xs-3">
+					<div class="dropdown">
+						<div class="dropdown-toggle" data-toggle="dropdown">
+							<img class="img-responsive" src="assets/img/flag_peru.png">
+						  	<span class="caret"></span>
+						</div>
+						<ul class="dropdown-menu">
+							<li><a id="+51" href="#"><img class="img-responsive" src="assets/img/flag_peru.png"> Perú</a></li>
+						    <li><a id="+56" href="#"><img class="img-responsive" src="assets/img/flag_chile.png"> Chile</a></li>
+						    <li><a id="+55" href="#"><img class="img-responsive" src="assets/img/flag_mexico.png"> Mexico</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+					<input type="text" id="codigo" value="+51" readonly>
+				</div>
+				<div class="col-sm-7 col-xs-7">
+					<input type="tel" pattern=".{9,}" id="telefono" placeholder="123456789">
+				</div>
+				<!--<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
+				
+					<div id="myModal" class="modal fade" role="dialog">
+					  	<div class="modal-dialog"> 
+					  	
+					    	<div class="modal-content">
+					      		<div class="modal-header">
+					        		<button type="button" class="close" data-dismiss="modal">Close</button>
+					        		<h4 class="modal-title">Select Country</h4>
+					      		</div>
+							    <div class="modal-body">
+							        <div class="container" id="listado-paises"></div>
+							    </div>
+					    	</div>
+					    </div>
+					</div>-->
+		    </div>
+		</div>
+		<div class="row">
+		    	<div class="col-xs-12 col-sm-12">
+		    		<p id="text-verify">We'll send you a text to verify your phone</p>
+		    	</div>
+		    </div>
+	</section>
+	<section class="next">
+		<a href="#.html"><button class="btn-lg">Next</button></a>
+	</section>
+	<script src="assets/js/jquery-3.2.1.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+</html>
