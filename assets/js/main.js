@@ -4,7 +4,9 @@ $('.dropdown-menu a').on('click', function(){
     $("#codigo").val($(this).attr('id'));
     $("#telefono").focus();
 })
-
+$("#sign-up").click(()=>{
+	window.location.href='signup_phone.html';
+})
 $("#telefono").keyup(()=>{
 	if($("#telefono").val().length==9){
 		 $("#boton_telefono").removeClass('disabled');

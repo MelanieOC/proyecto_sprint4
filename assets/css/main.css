@@ -89,6 +89,10 @@
 	font-size: 80%;
 	display: none;
 }
+
+.next .disabled{
+	background: silver;
+}
 #mapa_header{
 	z-index: 100;
 	position: absolute;
