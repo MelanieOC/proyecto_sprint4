@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lyft-App</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Lyft-Car</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 </head>
 <body>
-	<div id="mapa"></div>
-	<section id="menu_mapa">
-		<input type="text" id="destino" class="form-control">
+	<header id="mapa_header">
+		<i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
+		<img class="img-responsive" src="assets/img/logo-pink.png" alt="">
+		<span class="fa-stack fa-lg fa-2x">
+			<i class="fa fa-circle fa-stack-2x"></i>
+			<i class="fa fa-gift fa-stack-1x fa-inverse"></i>
+		</span>
+	</header>
+	<section>
+		<div id="mapa"></div>
+
 	</section>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdHQoVJGHGk8lG3ay1a7OXTdgMSE1szfM&callback=initMap&libraries=places"></script>
+	<section class="container">
+		<div class="row">
+			<div id="menu_mapa" class="col-sm-12 col-xs-12">
+				<div class="ocultar">
+					<div class="precio">
+						<img src="assets/img/carro.png" alt="carro">
+						<span><h4>Lyft</h4><p>Fast ride 4 seats</p></span>
+					</div>
+					<div class="precio">
+						<div class="text-center">
+							<p id="precio">$50</p>
+							<p>Price stimated</p>
+						</div>
+					</div>
+				</div>
+				<div id="origen" class="form-control"></div>
+				<input type="text" id="destino" class="form-control">
+				<button type="button" class="btn" id="ruta">Set pickup</button>
+				<button type="button" class="btn" id="solicitar">Request Lyft</button>
+			</div>
+		</div>
+	</section>
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdHQoVJGHGk8lG3ay1a7OXTdgMSE1szfM&callback=initMap&libraries=places"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/main.js"></script>
 </body>

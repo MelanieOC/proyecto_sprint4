@@ -1,29 +1,88 @@
 $('.dropdown-menu a').on('click', function(){
-	let imagen=$(this).find($("img")).attr('src');   
+	let imagen=$(this).find($("img")).attr('src');
     $('.dropdown-toggle').html( `<img src='${imagen}'>`+ '<span class="caret"></span>');
     $("#codigo").val($(this).attr('id'));
-    $("#telefono").focus();   
+    $("#telefono").focus();
 })
+
+$("#telefono").keyup(()=>{
+	if($("#telefono").val().length==9){
+		 $("#boton_telefono").removeClass('disabled');
+		$('#boton_telefono').click(()=>{
+			window.location.href='signup_datos.html';
+		})
+	}else{
+		$("#boton_telefono").addClass('disabled');
+		$("#boton_telefono").off('click');
+	}
+})
+
+function validacion() {
+	let validaciones = true;
+ if ($('#nombre').val() == "") {
+			 $('#nombre').next().show();
+			 validaciones =  validaciones && false;
+ } else {
+			 $('#nombre').next().hide();
+			 validaciones = validaciones && true;
+ }
+
+	 if ($('#email').val() == "") {
+			 $('#email').next().show();
+			 validaciones = validaciones && false;
+	 } else if(!(/\S+@\S+\.\S+/.test($('#email').val()))) { //valida si tiene los caracteres de un email
+			 $('#email').next().hide();
+			 $('#email').next().next().show();
+			 validaciones = validaciones && false;
+	 } else {
+			 $('#email').next().hide();
+			 $('#email').next().next().hide();
+			 validaciones = validaciones && true;
+	 }
+
+
+	 if ($('#apellido').val() === "") {
+			 $('#apellido').next().show();
+			 validaciones = validaciones && false;
+	 } else {
+			 $('#apellido').next().hide();
+			 validaciones = validaciones && true;
+	 }
+
+	 return validaciones;
+
+}
+$("#check").click(()=>{
+	if($("#check").prop('checked')){
+		$("#boton_usuario").removeClass('disabled');
+		$('#boton_usuario').click(()=>{
+			console.log('hola');
+			//window.location.href='signup_datos.html';
+		})
+	}else{
+		$("#boton_usuario").addClass('disabled');
+		$("#boton_usuario").off('click');
+	}
+})
+
+
+
+
 
 const geolocalizacion={
 	iniciar: ()=> {
 		let mapdivMap = $("#mapa")[0];
-		mapdivMap.style.width = (window.innerWidth);	
+		mapdivMap.style.width = (window.innerWidth);
    		mapdivMap.style.height = (window.innerHeight) + "px";
         geolocalizacion.elementos.mapa = new google.maps.Map($("#mapa")[0], geolocalizacion.mapaInicial);
         geolocalizacion.buscar();
         geolocalizacion.elementos.puntoDestino=$('#destino')[0];
+				geolocalizacion.elementos.puntoOrigen=$("#origen");
         geolocalizacion.autocompletado(geolocalizacion.elementos.puntoDestino);
-        
-        /*geolocalizacion.elementos.puntoOrigen=$("#origen")[0];
-        geolocalizacion.elementos.puntoDestino=$('#destino')[0];
-
-        geolocalizacion.elementos.servicioIndicaciones = new google.maps.DirectionsService;
+				geolocalizacion.evento();
+				geolocalizacion.elementos.servicioIndicaciones = new google.maps.DirectionsService;
    		geolocalizacion.elementos.mostrarDireccion = new google.maps.DirectionsRenderer;
    		geolocalizacion.elementos.mostrarDireccion.setMap(geolocalizacion.elementos.mapa);
-   		
-        geolocalizacion.autocompletado(geolocalizacion.elementos.puntoOrigen);
-        geolocalizacion.autocompletado(geolocalizacion.elementos.puntoDestino);*/
     },
     mapaInicial: { //datos para generar el mapa inicial
         zoom: 8,
@@ -32,17 +91,19 @@ const geolocalizacion={
         zoomControl: false,
         streetViewControl:false
     },
-    elementos:{ 
+    elementos:{
         mapa:null,
         servicioIndicaciones: null,
         mostrarDireccion: null,
         puntoOrigen: null,
-        puntoDestino:null
+        puntoDestino:null,
+				precio:null
     },
     ubicacionActual:{//datos de la ubicacion dada con encuentrame
     	latitud: null,
         longitud: null,
         informacion: null,
+				origen:null,
         marcador: null
     },
     buscar: ()=>{ //funcion que da la ubicacion actual
@@ -64,30 +125,48 @@ const geolocalizacion={
         geolocalizacion.ubicacionActual.marcador.setPosition(posicionEncontrada);
         geolocalizacion.elementos.mapa.setCenter(posicionEncontrada);
 
+				let geocoder = new google.maps.Geocoder();
+				geocoder.geocode({'latLng': posicionEncontrada}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					geolocalizacion.ubicacionActual.origen=results[0]['formatted_address'];
+				}
+		 });
+
     },
     mensajeError: (error)=>{ //funcion ejecutada cuando hay error en encontrar la ubicacion
         alert("Tenemos un problema con encontrar tu ubicación");
     },
     evento: ()=>{
-        $("#encuentrame").click(geolocalizacion.buscar);
-        $('#ruta').click(()=>{geolocalizacion.dibujarRuta(geolocalizacion.elementos.servicioIndicaciones,geolocalizacion.elementos.mostrarDireccion)});
+        $('#ruta').click(()=>{
+					geolocalizacion.mostrar();
+				});
     },
+		mostrar:()=>{
+			$(".ocultar").show();
+			$("#origen").show();
+			$("#solicitar").show();
+			$("#ruta").hide();
+			$("#origen").html(geolocalizacion.ubicacionActual.origen);
+			$('#precio').html(geolocalizacion.elementos.precio);
+			$('#menu_mapa .form-control, #menu_mapa button').css('margin', '0');
+		},
     crearMarcador:()=>{
         const icono = {
-            url: 'https://icon-icons.com/icons2/740/PNG/512/bicycle_icon-icons.com_63321.png',
+            url: 'https://www.shareicon.net/download/2015/06/21/57812_pink_256x256.png',
             size: new google.maps.Size(71, 71),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(35, 35)
         };
-        let miUbicacion = new google.maps.Marker({ 
+        let miUbicacion = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map: geolocalizacion.elementos.mapa,
+						icon: icono
         });
         geolocalizacion.elementos.mapa.setZoom(15);
         return miUbicacion;
 
-    }, 
+    },
     autocompletado: (entrada)=>{ //fncion para que cada input tenga el autocompletado
     	let info=new google.maps.InfoWindow();
     	let marcador=geolocalizacion.crearMarcador();
@@ -95,31 +174,18 @@ const geolocalizacion={
 	    	autocompletar.bindTo('bounds', geolocalizacion.elementos.mapa);
 	    	autocompletar.addListener('place_changed', function() { //se le da el evento
 	            let lugar = autocompletar.getPlace();
-	            info.close();//se borra de la informacion y el marcador de antiguas ubicaciones dadas
-            	marcador.setVisible(false);
+
             	//se borra la informacion y el marcador de ubicacion Actual, si es que está
             	if(geolocalizacion.ubicacionActual.informacion&&geolocalizacion.ubicacionActual.marcador){
             		geolocalizacion.ubicacionActual.informacion.close();
             		geolocalizacion.ubicacionActual.marcador.setVisible(false);
             	}
 	            geolocalizacion.marcarUbicacion(lugar, info,marcador);
+							geolocalizacion.dibujarRuta(geolocalizacion.elementos.servicioIndicaciones,geolocalizacion.elementos.mostrarDireccion);
 	        });
     },
      marcarUbicacion: (lugar, detalleUbicacion, marcador) =>{
-        if (!lugar.geometry) {
-            // Error si no encuentra el lugar indicado
-            window.alert("No encontramos el lugar que indicaste: '" + lugar.name + "'");
-            return;
-        }
-        // Si el lugar tiene una geometría, entonces presentarlo en un mapa.
-        if (lugar.geometry.viewport) {
-            geolocalizacion.elementos.mapa.fitBounds(lugar.geometry.viewport);
-        } else {
-            geolocalizacion.elementos.mapa.setCenter(lugar.geometry.location);
-        }
-
         marcador.setPosition(lugar.geometry.location);
-        marcador.setVisible(true);
 
         let direccion = '';
         if (lugar.address_components) {
@@ -134,25 +200,24 @@ const geolocalizacion={
         detalleUbicacion.open(geolocalizacion.elementos.mapa, marcador);
     },
     dibujarRuta:(servicioIndicaciones, mostrarDireccion)=> {
-    	console.log('hola');
-        let origen = geolocalizacion.elementos.puntoOrigen;
         let destino = geolocalizacion.elementos.puntoDestino.value;
-        if(destino != "" && origen != "") {
+        if(destino != "") {
             servicioIndicaciones.route({
-                origin: origen,
+                origin: new google.maps.LatLng(geolocalizacion.ubicacionActual.latitud, geolocalizacion.ubicacionActual.longitud),
                 destination: destino,
                 travelMode: "DRIVING"
             },
             function(response, status) {
                 if (status === "OK") {
                     mostrarDireccion.setDirections(response);
+										geolocalizacion.elementos.precio = response.routes[0].overview_path.length / 10  + 'USD';
                 } else {
                     geolocalizacion.mensajeError();
                 }
+
             });
         }
     },
-
 }
 
 function initMap() {

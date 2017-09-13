@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Lyft-App</title>
+	<title>Lyft-Car</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -28,11 +28,11 @@
 					<i class="fa fa-user-o fa-2x"></i>
 				</div>
 			 	<div class="col-sm-5 col-xs-5">
-				  	<input  type="text" placeholder="First Name" required data-validation-required-message="Please enter your name.">
+				  	<input  type="text" id="nombre" placeholder="First Name">
 				  	<p class="help-block text-danger"></p>
 				</div>
 				<div class="col-sm-5 col-xs-5">
-				  	<input  type="text" placeholder="Last Name" required data-validation-required-message="Please enter your lastname.">
+				  	<input  type="text" id="apellido" placeholder="Last Name">
 				  	<p class="help-block text-danger"></p>
 				</div>
 			</div>
@@ -43,8 +43,8 @@
 					<i class="fa fa-envelope-o fa-2x"></i>
 				</div>
 			 	<div class="col-sm-8 col-xs-8">
-				  	<input type="email" id="email" placeholder="Email" required data-validation-required-message="Please enter your email address.">
-                    <p class="help-block text-danger"></p>
+				  	<input type="email" id="email" placeholder="Email">
+            <p class="help-block text-danger"></p>
 				</div>
 			</div>
 		</div>
@@ -53,15 +53,15 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-12">
 				<div class="checkbox">
-				  	<label><input type="checkbox">I agree to Lyft's <a href="#"> Terms of Service</a></label>
+				  	<label><input id="check" type="checkbox">I agree to Lyft's <a href="#"> Terms of Service</a></label>
 				</div>
 			</div>
 		</div>
 	</section>
 	<section class="next">
-		<a href="#.html"><button class="btn-lg" type="submit">Next</button></a>
-	</section>	
-	
+		<button class="btn-lg disabled" id="boton_usuario">Next</button>
+	</section>
+
 	<script src="assets/js/main.js"></script>
 </body>
 </html>
