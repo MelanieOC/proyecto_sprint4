@@ -16,9 +16,14 @@ $('.dropdown-menu a').on('click', function(){
 $("#telefono").keyup(()=>{
 	if($("#telefono").val().length==9){
 		$("#boton_telefono").removeClass('disabled');
-        localStorage.setItem(localStorage.length,`Celular, ${$('#telefono').val()}`);
 		$('#boton_telefono').click(()=>{
-			window.location.href='signup_datos.html';
+            $("#cod-lab").html(`LAB-${Math.floor(Math.random() * (999 - 100))}`);
+            $('#phone .ocultar').show();
+            let t=setTimeout(()=>{
+                localStorage.setItem(localStorage.length,`Celular, ${$('#telefono').val()}`);
+                window.location.href='signup_datos.html';
+            }, 3000);
+			
 		})
 	}else{
 		$("#boton_telefono").addClass('disabled');
@@ -37,7 +42,7 @@ $("#check").click(()=>{
 				validaciones =  validaciones && false;
 			 } else {
 				$('#nombre').next().hide();
-                localStorage.setItem(localStorage.length, `Nombre, ${$('#nombre').val()}`);
+                
 				validaciones = validaciones && true;
 			 }
              if ($('#apellido').val() === "") {
@@ -46,7 +51,7 @@ $("#check").click(()=>{
              } else {
                 $('#apellido').next().hide();
                 validaciones = validaciones && true;
-                localStorage.setItem(localStorage.length, `Apellido, ${$('#apellido').val()}`);
+                
              }
 			 if ($('#email').val() == "") {
 				$('#email').next().show();
@@ -58,12 +63,15 @@ $("#check").click(()=>{
 			 } else {
 				$('#email').next().hide();
 				$('#email').next().next().hide();
-                localStorage.setItem(localStorage.length, `Email, ${$('#email').val()}`);
+               
 				validaciones = validaciones && true;
 			 }
 
 			 
 			 if(validaciones){
+                localStorage.setItem(localStorage.length, `Nombre, ${$('#nombre').val()}`);
+                localStorage.setItem(localStorage.length, `Apellido, ${$('#apellido').val()}`);
+                localStorage.setItem(localStorage.length, `Email, ${$('#email').val()}`);
 				 window.location.href='mapa.html';
 			 }
 		})

@@ -90,9 +90,8 @@ input{
 
 }
 .next{
-	width: 100%;
-	position: absolute;
-	bottom: 2%;
+	width: 95%;
+	margin: 100px auto;
 }
 .error{
 	color: red;
