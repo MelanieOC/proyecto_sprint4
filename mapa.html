@@ -45,24 +45,22 @@
 				<input type="text" id="destino" class="form-control">
 				<button type="button" class="btn" id="ruta">Set pickup</button>
 				<button type="button" class="btn" id="solicitar" data-toggle="modal" data-target="#myModal">Request Lyft</button>
-		
-					<div id="myModal" class="modal" role="dialog">
-					  	<div class="modal-dialog">
-
-					    	<div class="modal-content">
-					      		<div class="modal-header">
-					        		<button type="button" class="close" data-dismiss="modal">&times;</button>
-					        		<h4 class="modal-title">Tu lyft está en camino</h4>
-					      		</div>
-							    <div class="modal-body">
-							        <button class="btn" id="otro_viaje">Otro viaje</button>
-							    </div>
-					    	</div>
-					    </div>
-					</div>
 			</div>
 		</div>
 	</section>
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title text-center">Tu lyft está en camino</h4>
+				</div>
+				<div class="modal-body">
+					<button class="btn" id="otro_viaje">Otro viaje</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="assets/js/jquery-3.2.1.min.js"></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdHQoVJGHGk8lG3ay1a7OXTdgMSE1szfM&callback=initMap&libraries=places"></script>
 	<script src="assets/js/bootstrap.min.js"></script>

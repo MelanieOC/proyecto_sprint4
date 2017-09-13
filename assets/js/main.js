@@ -95,16 +95,13 @@ $('#otro_viaje').click(()=>{
 })
 const geolocalizacion={
 	iniciar: ()=> {
-		let mapdivMap = $("#mapa")[0];
-		mapdivMap.style.width = (window.innerWidth);
-   		mapdivMap.style.height = (window.innerHeight) + "px";
         geolocalizacion.elementos.mapa = new google.maps.Map($("#mapa")[0], geolocalizacion.mapaInicial);
         geolocalizacion.buscar();
         geolocalizacion.elementos.puntoDestino=$('#destino')[0];
-				geolocalizacion.elementos.puntoOrigen=$("#origen");
+		geolocalizacion.elementos.puntoOrigen=$("#origen");
         geolocalizacion.autocompletado(geolocalizacion.elementos.puntoDestino);
-				geolocalizacion.evento();
-				geolocalizacion.elementos.servicioIndicaciones = new google.maps.DirectionsService;
+		geolocalizacion.evento();
+		geolocalizacion.elementos.servicioIndicaciones = new google.maps.DirectionsService;
    		geolocalizacion.elementos.mostrarDireccion = new google.maps.DirectionsRenderer;
    		geolocalizacion.elementos.mostrarDireccion.setMap(geolocalizacion.elementos.mapa);
     },
@@ -119,9 +116,8 @@ const geolocalizacion={
         mapa:null,
         servicioIndicaciones: null,
         mostrarDireccion: null,
-        puntoOrigen: null,
         puntoDestino:null,
-				precio:null
+		precio:null
     },
     ubicacionActual:{//datos de la ubicacion dada con encuentrame
     	latitud: null,
@@ -161,9 +157,15 @@ const geolocalizacion={
         alert("Tenemos un problema con encontrar tu ubicación");
     },
     evento: ()=>{
-        $('#ruta').click(()=>{
-					geolocalizacion.mostrar();
-				});
+            $('#ruta').click(()=>{
+                if(geolocalizacion.elementos.puntoDestino.value!=""){
+                    geolocalizacion.mostrar();
+                } else{
+            geolocalizacion.elementos.puntoDestino.focus();
+        }
+                });
+        
+        
     },
 		mostrar:()=>{
 			$(".ocultar").show();
