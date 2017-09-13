@@ -10,12 +10,17 @@
 </head>
 <body>
 	<header id="mapa_header">
-		<i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
+		<img class="img-responsive" id='usuario_logo' src="assets/img/usuario.png" alt="">
 		<img class="img-responsive" src="assets/img/logo-pink.png" alt="">
 		<span class="fa-stack fa-lg fa-2x">
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-gift fa-stack-1x fa-inverse"></i>
 		</span>
+		<div id="mySidenav" class="sidenav">
+		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		  <div id="datos_usuario">
+		  </div>
+		</div>
 	</header>
 	<section>
 		<div id="mapa"></div>
@@ -31,7 +36,7 @@
 					</div>
 					<div class="precio">
 						<div class="text-center">
-							<p id="precio">$50</p>
+							<p id="precio"></p>
 							<p>Price stimated</p>
 						</div>
 					</div>
@@ -39,7 +44,22 @@
 				<div id="origen" class="form-control"></div>
 				<input type="text" id="destino" class="form-control">
 				<button type="button" class="btn" id="ruta">Set pickup</button>
-				<button type="button" class="btn" id="solicitar">Request Lyft</button>
+				<button type="button" class="btn" id="solicitar" data-toggle="modal" data-target="#myModal">Request Lyft</button>
+		
+					<div id="myModal" class="modal" role="dialog">
+					  	<div class="modal-dialog">
+
+					    	<div class="modal-content">
+					      		<div class="modal-header">
+					        		<button type="button" class="close" data-dismiss="modal">&times;</button>
+					        		<h4 class="modal-title">Tu lyft está en camino</h4>
+					      		</div>
+							    <div class="modal-body">
+							        <button class="btn" id="otro_viaje">Otro viaje</button>
+							    </div>
+					    	</div>
+					    </div>
+					</div>
 			</div>
 		</div>
 	</section>

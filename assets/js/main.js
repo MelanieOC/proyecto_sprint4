@@ -1,15 +1,22 @@
+
+$("#sign-up").click(()=>{
+    localStorage.clear();
+    window.location.href='signup_phone.html';
+})
+
+
+//singup_phone
 $('.dropdown-menu a').on('click', function(){
 	let imagen=$(this).find($("img")).attr('src');
     $('.dropdown-toggle').html( `<img src='${imagen}'>`+ '<span class="caret"></span>');
     $("#codigo").val($(this).attr('id'));
     $("#telefono").focus();
 })
-$("#sign-up").click(()=>{
-	window.location.href='signup_phone.html';
-})
+
 $("#telefono").keyup(()=>{
 	if($("#telefono").val().length==9){
-		 $("#boton_telefono").removeClass('disabled');
+		$("#boton_telefono").removeClass('disabled');
+        localStorage.setItem(localStorage.length,`Celular, ${$('#telefono').val()}`);
 		$('#boton_telefono').click(()=>{
 			window.location.href='signup_datos.html';
 		})
@@ -19,39 +26,43 @@ $("#telefono").keyup(()=>{
 	}
 })
 
+//singup_datos
 $("#check").click(()=>{
 	if($("#check").prop('checked')){
 		$("#boton_usuario").removeClass('disabled');
 		$('#boton_usuario').click(()=>{
 			let validaciones = true;
 			 if ($('#nombre').val() == "") {
-						 $('#nombre').next().show();
-						 validaciones =  validaciones && false;
+				$('#nombre').next().show();
+				validaciones =  validaciones && false;
 			 } else {
-						 $('#nombre').next().hide();
-						 validaciones = validaciones && true;
+				$('#nombre').next().hide();
+                localStorage.setItem(localStorage.length, `Nombre, ${$('#nombre').val()}`);
+				validaciones = validaciones && true;
 			 }
-
+             if ($('#apellido').val() === "") {
+                $('#apellido').next().show();
+                validaciones = validaciones && false;
+             } else {
+                $('#apellido').next().hide();
+                validaciones = validaciones && true;
+                localStorage.setItem(localStorage.length, `Apellido, ${$('#apellido').val()}`);
+             }
 			 if ($('#email').val() == "") {
-					 $('#email').next().show();
-					 validaciones = validaciones && false;
+				$('#email').next().show();
+				validaciones = validaciones && false;
 			 } else if(!(/\S+@\S+\.\S+/.test($('#email').val()))) { //valida si tiene los caracteres de un email
-					 $('#email').next().hide();
-					 $('#email').next().next().show();
-					 validaciones = validaciones && false;
+				$('#email').next().hide();
+				$('#email').next().next().show();
+				validaciones = validaciones && false;
 			 } else {
-					 $('#email').next().hide();
-					 $('#email').next().next().hide();
-					 validaciones = validaciones && true;
+				$('#email').next().hide();
+				$('#email').next().next().hide();
+                localStorage.setItem(localStorage.length, `Email, ${$('#email').val()}`);
+				validaciones = validaciones && true;
 			 }
 
-			 if ($('#apellido').val() === "") {
-					 $('#apellido').next().show();
-					 validaciones = validaciones && false;
-			 } else {
-					 $('#apellido').next().hide();
-					 validaciones = validaciones && true;
-			 }
+			 
 			 if(validaciones){
 				 window.location.href='mapa.html';
 			 }
@@ -62,10 +73,26 @@ $("#check").click(()=>{
 	}
 })
 
+//sideNav
+$('#usuario_logo').click(()=>{
+    $("#mySidenav").width("250px");
+    $.each(localStorage, (key, value)=>{
+        let array = value.split(','); //se crea un array con los valores, nombre y comentario
+            $('#datos_usuario').append(
+                `<div>
+                    <strong>${array[0]}:</strong>${array[1]}
+                </div>`);
+    })
+})
+function closeNav() {
+    $("#mySidenav").width(0);
+}
 
 
-
-
+//mapa
+$('#otro_viaje').click(()=>{
+    window.location.href='mapa.html';
+})
 const geolocalizacion={
 	iniciar: ()=> {
 		let mapdivMap = $("#mapa")[0];
