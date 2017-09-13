@@ -22,7 +22,7 @@ $("#telefono").keyup(()=>{
             let t=setTimeout(()=>{
                 localStorage.setItem(localStorage.length,`Celular, ${$('#telefono').val()}`);
                 window.location.href='signup_datos.html';
-            }, 3000);
+            }, 2500);
 			
 		})
 	}else{
@@ -42,7 +42,6 @@ $("#check").click(()=>{
 				validaciones =  validaciones && false;
 			 } else {
 				$('#nombre').next().hide();
-                
 				validaciones = validaciones && true;
 			 }
              if ($('#apellido').val() === "") {
@@ -63,16 +62,13 @@ $("#check").click(()=>{
 			 } else {
 				$('#email').next().hide();
 				$('#email').next().next().hide();
-               
 				validaciones = validaciones && true;
 			 }
-
-			 
 			 if(validaciones){
                 localStorage.setItem(localStorage.length, `Nombre, ${$('#nombre').val()}`);
                 localStorage.setItem(localStorage.length, `Apellido, ${$('#apellido').val()}`);
                 localStorage.setItem(localStorage.length, `Email, ${$('#email').val()}`);
-				 window.location.href='mapa.html';
+				window.location.href='mapa.html';
 			 }
 		})
 	}else{
@@ -84,6 +80,7 @@ $("#check").click(()=>{
 //sideNav
 $('#usuario_logo').click(()=>{
     $("#mySidenav").width("250px");
+    $('#datos_usuario').empty();
     $.each(localStorage, (key, value)=>{
         let array = value.split(','); //se crea un array con los valores, nombre y comentario
             $('#datos_usuario').append(
@@ -101,6 +98,7 @@ function closeNav() {
 $('#otro_viaje').click(()=>{
     window.location.href='mapa.html';
 })
+
 const geolocalizacion={
 	iniciar: ()=> {
         geolocalizacion.elementos.mapa = new google.maps.Map($("#mapa")[0], geolocalizacion.mapaInicial);
@@ -114,7 +112,7 @@ const geolocalizacion={
    		geolocalizacion.elementos.mostrarDireccion.setMap(geolocalizacion.elementos.mapa);
     },
     mapaInicial: { //datos para generar el mapa inicial
-        zoom: 8,
+        zoom: 12,
         center: {lat: -16.3988900, lng: -71.5350000},//coordenadas de Arequipa
         mapTypeControl: false,
         zoomControl: false,
@@ -131,7 +129,7 @@ const geolocalizacion={
     	latitud: null,
         longitud: null,
         informacion: null,
-				origen:null,
+		origen:null,
         marcador: null
     },
     buscar: ()=>{ //funcion que da la ubicacion actual
@@ -146,18 +144,21 @@ const geolocalizacion={
         let posicionEncontrada = {lat:geolocalizacion.ubicacionActual.latitud, lng:geolocalizacion.ubicacionActual.longitud};
         geolocalizacion.elementos.puntoOrigen=posicionEncontrada;
         geolocalizacion.ubicacionActual.marcador = geolocalizacion.crearMarcador();
+        geolocalizacion.elementos.mapa.setZoom(15);
+
+
         geolocalizacion.ubicacionActual.informacion=new google.maps.InfoWindow();
-        	geolocalizacion.ubicacionActual.informacion.setContent(`<div><strong>Mi ubicacion</strong><br>`);
-        	geolocalizacion.ubicacionActual.informacion.open(geolocalizacion.elementos.mapa, geolocalizacion.ubicacionActual.marcador);
+        geolocalizacion.ubicacionActual.informacion.setContent(`<div><strong>Mi ubicacion</strong><br>`);
+        geolocalizacion.ubicacionActual.informacion.open(geolocalizacion.elementos.mapa, geolocalizacion.ubicacionActual.marcador);
 
         geolocalizacion.ubicacionActual.marcador.setPosition(posicionEncontrada);
         geolocalizacion.elementos.mapa.setCenter(posicionEncontrada);
 
-				let geocoder = new google.maps.Geocoder();
-				geocoder.geocode({'latLng': posicionEncontrada}, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					geolocalizacion.ubicacionActual.origen=results[0]['formatted_address'];
-				}
+		let geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'latLng': posicionEncontrada}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			geolocalizacion.ubicacionActual.origen=results[0]['formatted_address'];
+		}
 		 });
 
     },
@@ -165,25 +166,25 @@ const geolocalizacion={
         alert("Tenemos un problema con encontrar tu ubicación");
     },
     evento: ()=>{
-            $('#ruta').click(()=>{
-                if(geolocalizacion.elementos.puntoDestino.value!=""){
-                    geolocalizacion.mostrar();
-                } else{
-            geolocalizacion.elementos.puntoDestino.focus();
-        }
-                });
+        $('#ruta').click(()=>{
+            if(geolocalizacion.elementos.puntoDestino.value!=""){
+                geolocalizacion.mostrar();
+            } else{
+                geolocalizacion.elementos.puntoDestino.focus();
+            }
+        });
         
         
     },
-		mostrar:()=>{
-			$(".ocultar").show();
-			$("#origen").show();
-			$("#solicitar").show();
-			$("#ruta").hide();
-			$("#origen").html(geolocalizacion.ubicacionActual.origen);
-			$('#precio').html(geolocalizacion.elementos.precio);
-			$('#menu_mapa .form-control, #menu_mapa button').css('margin', '0');
-		},
+	mostrar:()=>{
+		$(".ocultar").show();
+		$("#origen").show();
+		$("#solicitar").show();
+		$("#ruta").hide();
+		$("#origen").html(geolocalizacion.ubicacionActual.origen);
+		$('#precio').html(geolocalizacion.elementos.precio);
+		$('#menu_mapa .form-control, #menu_mapa button').css('margin', '0');
+	},
     crearMarcador:()=>{
         const icono = {
             url: 'https://www.shareicon.net/download/2015/06/21/57812_pink_256x256.png',
@@ -195,9 +196,8 @@ const geolocalizacion={
         let miUbicacion = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             map: geolocalizacion.elementos.mapa,
-						icon: icono
+			icon: icono
         });
-        geolocalizacion.elementos.mapa.setZoom(15);
         return miUbicacion;
 
     },
@@ -215,7 +215,7 @@ const geolocalizacion={
             		geolocalizacion.ubicacionActual.marcador.setVisible(false);
             	}
 	            geolocalizacion.marcarUbicacion(lugar, info,marcador);
-							geolocalizacion.dibujarRuta(geolocalizacion.elementos.servicioIndicaciones,geolocalizacion.elementos.mostrarDireccion);
+				geolocalizacion.dibujarRuta(geolocalizacion.elementos.servicioIndicaciones,geolocalizacion.elementos.mostrarDireccion);
 	        });
     },
      marcarUbicacion: (lugar, detalleUbicacion, marcador) =>{
@@ -244,7 +244,7 @@ const geolocalizacion={
             function(response, status) {
                 if (status === "OK") {
                     mostrarDireccion.setDirections(response);
-										geolocalizacion.elementos.precio = response.routes[0].overview_path.length / 10  + 'USD';
+					geolocalizacion.elementos.precio = response.routes[0].overview_path.length / 10  + 'USD';
                 } else {
                     geolocalizacion.mensajeError();
                 }
