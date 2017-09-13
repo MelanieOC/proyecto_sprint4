@@ -17,47 +17,42 @@ $("#telefono").keyup(()=>{
 	}
 })
 
-function validacion() {
-	let validaciones = true;
- if ($('#nombre').val() == "") {
-			 $('#nombre').next().show();
-			 validaciones =  validaciones && false;
- } else {
-			 $('#nombre').next().hide();
-			 validaciones = validaciones && true;
- }
-
-	 if ($('#email').val() == "") {
-			 $('#email').next().show();
-			 validaciones = validaciones && false;
-	 } else if(!(/\S+@\S+\.\S+/.test($('#email').val()))) { //valida si tiene los caracteres de un email
-			 $('#email').next().hide();
-			 $('#email').next().next().show();
-			 validaciones = validaciones && false;
-	 } else {
-			 $('#email').next().hide();
-			 $('#email').next().next().hide();
-			 validaciones = validaciones && true;
-	 }
-
-
-	 if ($('#apellido').val() === "") {
-			 $('#apellido').next().show();
-			 validaciones = validaciones && false;
-	 } else {
-			 $('#apellido').next().hide();
-			 validaciones = validaciones && true;
-	 }
-
-	 return validaciones;
-
-}
 $("#check").click(()=>{
 	if($("#check").prop('checked')){
 		$("#boton_usuario").removeClass('disabled');
 		$('#boton_usuario').click(()=>{
-			console.log('hola');
-			//window.location.href='signup_datos.html';
+			let validaciones = true;
+			 if ($('#nombre').val() == "") {
+						 $('#nombre').next().show();
+						 validaciones =  validaciones && false;
+			 } else {
+						 $('#nombre').next().hide();
+						 validaciones = validaciones && true;
+			 }
+
+			 if ($('#email').val() == "") {
+					 $('#email').next().show();
+					 validaciones = validaciones && false;
+			 } else if(!(/\S+@\S+\.\S+/.test($('#email').val()))) { //valida si tiene los caracteres de un email
+					 $('#email').next().hide();
+					 $('#email').next().next().show();
+					 validaciones = validaciones && false;
+			 } else {
+					 $('#email').next().hide();
+					 $('#email').next().next().hide();
+					 validaciones = validaciones && true;
+			 }
+
+			 if ($('#apellido').val() === "") {
+					 $('#apellido').next().show();
+					 validaciones = validaciones && false;
+			 } else {
+					 $('#apellido').next().hide();
+					 validaciones = validaciones && true;
+			 }
+			 if(validaciones){
+				 window.location.href='mapa.html';
+			 }
 		})
 	}else{
 		$("#boton_usuario").addClass('disabled');
